@@ -141,7 +141,7 @@ stages:
       vmImage: 'windows-2019'
     variables:
     - group: 'Release'
-    environment: 'dbverificationapply'
+    environment: 'dbaverificationapply'
     strategy:
       runOnce:
         deploy:
