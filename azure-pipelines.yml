@@ -91,7 +91,7 @@ stages:
       displayName: 'Publish Arifact'
       inputs:
         pathToPublish: '$(Build.ArtifactStagingDirectory)'
-        artifactName: dropDacpac
+        artifactName: dropDacPac
       condition: succeededOrFailed()
 
 - stage: DBAVerificationScript
@@ -109,7 +109,7 @@ stages:
         deploy:
           steps:
           - download: current
-            artifact: dropDacpac
+            artifact: dropDacPac
             patterns: '**/*'
           - task: SqlAzureDacpacDeployment@1
             displayName: 'Generate schema change script'
@@ -122,7 +122,7 @@ stages:
               sqlPassword: '$(adminPassword)'
               deployType: 'DacpacTask'
               deploymentAction: 'Script'
-              dacpacFile: '$(Pipeline.Workspace)/dropDacpac/Tailspin.SpaceGame.Database/bin/Debug/Tailspin.SpaceGame.Database.dacpac'
+              dacpacFile: '$(Pipeline.Workspace)/dropDacPac/Tailspin.SpaceGame.Database/bin/Debug/Tailspin.SpaceGame.Database.dacpac'
               ipDetectionMethod: 'AutoDetect'
           - task: PowerShell@2
             displayName: 'Show Auto Generated SQL Script'
@@ -130,7 +130,7 @@ stages:
               targetType: 'inline'
               script: |
                 Write-Host "Auto Generated SQL Update Script:"
-                Get-Content $(Pipeline.Workspace)/dropDacpac/Tailspin.SpaceGame.Database/bin/Debug/Tailspin.SpaceGame.Database.dacpac
+                Get-Content $(Pipeline.Workspace)/dropDacPac/Tailspin.SpaceGame.Database/bin/Debug/Tailspin.SpaceGame.Database.dacpac
 
 - stage: DBAVerificationApply
   displayName: 'Apply database schema changes'
@@ -147,7 +147,7 @@ stages:
         deploy:
           steps:
           - download: current
-            artifact: dropDacpac
+            artifact: dropDacPac
             patterns: '**/*'
           - task: SqlAzureDacpacDeployment@1
             displayName: 'Deploy SQL Schema'
@@ -160,7 +160,7 @@ stages:
               sqlPassword: '$(adminPassword)'
               deployType: 'DacpacTask'
               deploymentAction: 'Publish'
-              dacpacFile: '$(Pipeline.Workspace)/dropDacpac/Tailspin.SpaceGame.Database/bin/Debug/Tailspin.SpaceGame.Database.dacpac'
+              dacpacFile: '$(Pipeline.Workspace)/dropDacPac/Tailspin.SpaceGame.Database/bin/Debug/Tailspin.SpaceGame.Database.dacpac'
               ipDetectionMethod: 'AutoDetect'
 
 - stage: 'Dev'
