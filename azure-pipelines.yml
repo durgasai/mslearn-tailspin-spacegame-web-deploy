@@ -91,7 +91,7 @@ stages:
       displayName: 'Publish Arifact'
       inputs:
         pathToPublish: '$(Build.ArtifactStagingDirectory)'
-        artifactName: dropDacPac
+        artifactName: dropDacpac
       condition: succeededOrFailed()
 
 - stage: DBAVerificationScript
